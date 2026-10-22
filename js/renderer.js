@@ -100,13 +100,14 @@ export class OverlayRenderer {
   }
 
   async loadAssets() {
+    const v = '?v=2.1.0';
     const list = [
-      { key: 'miles',   path: 'assets/masks/miles.png' },
-      { key: 'gwen',    path: 'assets/masks/gwen.png' },
-      { key: 'noir',    path: 'assets/masks/noir.png' },
-      { key: 'anime',   path: 'assets/masks/peni.png' },
-      { key: 'ham',     path: 'assets/masks/spider_ham.png' },
-      { key: 'classic', path: 'assets/masks/classic.png' },
+      { key: 'miles',   path: 'assets/masks/miles.png' + v },
+      { key: 'gwen',    path: 'assets/masks/gwen.png' + v },
+      { key: 'noir',    path: 'assets/masks/noir.png' + v },
+      { key: 'anime',   path: 'assets/masks/peni.png' + v },
+      { key: 'ham',     path: 'assets/masks/spider_ham.png' + v },
+      { key: 'classic', path: 'assets/masks/classic.png' + v },
     ];
 
     await Promise.all(
