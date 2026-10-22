@@ -88,55 +88,60 @@ export class TrackerManager {
       }
     }
 
-    onProgress(50, 'Initializing Hand Landmarker…');
+    onProgress(45, 'Initializing AI Vision Pipeline…');
 
-    try {
-      this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath: HAND_MODEL,
-          delegate: 'GPU',
-        },
-        runningMode: 'VIDEO',
-        numHands: 2,
-      });
-    } catch (gpuErr) {
-      console.warn('HandLandmarker GPU delegate failed, falling back to CPU:', gpuErr);
-      this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath: HAND_MODEL,
-          delegate: 'CPU',
-        },
-        runningMode: 'VIDEO',
-        numHands: 2,
-      });
-    }
-    this.handReady = true;
+    const initHand = async () => {
+      try {
+        this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath: HAND_MODEL,
+            delegate: 'GPU',
+          },
+          runningMode: 'VIDEO',
+          numHands: 2,
+        });
+      } catch (gpuErr) {
+        console.warn('HandLandmarker GPU delegate failed, falling back to CPU:', gpuErr);
+        this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath: HAND_MODEL,
+            delegate: 'CPU',
+          },
+          runningMode: 'VIDEO',
+          numHands: 2,
+        });
+      }
+      this.handReady = true;
+    };
 
-    onProgress(75, 'Initializing Face Landmarker…');
+    const initFace = async () => {
+      try {
+        this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath: FACE_MODEL,
+            delegate: 'GPU',
+          },
+          runningMode: 'VIDEO',
+          numFaces: 1,
+        });
+      } catch (gpuErr) {
+        console.warn('FaceLandmarker GPU delegate failed, falling back to CPU:', gpuErr);
+        this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath: FACE_MODEL,
+            delegate: 'CPU',
+          },
+          runningMode: 'VIDEO',
+          numFaces: 1,
+        });
+      }
+      this.faceReady = true;
+    };
 
-    try {
-      this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath: FACE_MODEL,
-          delegate: 'GPU',
-        },
-        runningMode: 'VIDEO',
-        numFaces: 1,
-      });
-    } catch (gpuErr) {
-      console.warn('FaceLandmarker GPU delegate failed, falling back to CPU:', gpuErr);
-      this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath: FACE_MODEL,
-          delegate: 'CPU',
-        },
-        runningMode: 'VIDEO',
-        numFaces: 1,
-      });
-    }
-    this.faceReady = true;
+    // Parallelize Hand and Face Landmarker creation for ~2x faster initialization
+    await Promise.all([initHand(), initFace()]);
 
-    onProgress(95, 'Compiling WebGL shaders…');
+    onProgress(90, 'Tensor Pipeline Synchronized…');
   }
 
   /**

@@ -264,13 +264,17 @@ function loop(timestamp) {
 
   const boxActive = cachedPoints !== null;
 
-  // Throttled Face Tracking Inference (runs continuously while camera is active)
-  if (timestamp - lastFaceTime >= faceInterval) {
-    cachedFaceResult = tracker.detectFace(video, timestamp);
-    lastFaceTime = timestamp;
+  // Optimized: Only compute heavy 478-point Face Mesh when character mask is active
+  if (maskEnabled) {
+    if (timestamp - lastFaceTime >= faceInterval) {
+      cachedFaceResult = tracker.detectFace(video, timestamp);
+      lastFaceTime = timestamp;
+    }
+  } else {
+    cachedFaceResult = null;
   }
 
-  const faceDetected = (cachedFaceResult?.faceLandmarks?.length ?? 0) > 0;
+  const faceDetected = maskEnabled && ((cachedFaceResult?.faceLandmarks?.length ?? 0) > 0);
 
   if (boxActive) {
     // Render chosen Multiverse shader
@@ -360,7 +364,7 @@ async function bootstrap(targetUniverse) {
 
     setProgress(98, 'SYNCHRONIZING TENSOR PIPELINE…');
 
-    // Ensure camera has delivered at least one frame before switching
+    // Ensure camera has delivered video frame before displaying AR
     if (video.readyState < 2 || video.videoWidth === 0) {
       await new Promise(resolve => {
         const onTime = () => {
@@ -370,7 +374,7 @@ async function bootstrap(targetUniverse) {
           }
         };
         video.addEventListener('timeupdate', onTime);
-        setTimeout(resolve, 1500);
+        setTimeout(resolve, 500);
       });
     }
 
@@ -384,7 +388,6 @@ async function bootstrap(targetUniverse) {
       showSection(arSection);
       rafId = requestAnimationFrame(loop);
     };
-    await new Promise(r => setTimeout(r, 400));
 
     isRunning = true;
     startTime = performance.now();
