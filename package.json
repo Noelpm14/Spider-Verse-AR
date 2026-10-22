@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Browser-native Spider-Verse Augmented Reality experience with real-time AI hand/face tracking and WebGL comic shaders.",
   "scripts": {
-    "build": "echo 'Static build complete'",
-    "start": "node server.js",
     "dev": "node server.js"
   },
   "keywords": [
