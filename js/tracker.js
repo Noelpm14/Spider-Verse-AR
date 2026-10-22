@@ -80,7 +80,12 @@ export class TrackerManager {
       vision = await FilesetResolver.forVisionTasks(`${MEDIAPIPE_CDN}/wasm`);
     } catch (wasmErr) {
       console.warn('Primary WASM CDN failed, trying esm.sh CDN…', wasmErr);
-      vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm');
+      try {
+        vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm');
+      } catch (wasmErr2) {
+        console.warn('Latest WASM CDN failed, trying unpkg…', wasmErr2);
+        vision = await FilesetResolver.forVisionTasks('https://unpkg.com/@mediapipe/tasks-vision@0.10.14/wasm');
+      }
     }
 
     onProgress(50, 'Initializing Hand Landmarker…');

@@ -34,6 +34,25 @@
   <meta name="twitter:description" content="Real-time Spider-Verse AR with MediaPipe AI & WebGL comic shaders. Client-side & private." />
   <meta name="twitter:image" content="assets/og-preview.png" />
 
+  <script>
+    window.onerror = function(msg, url, line, col, err) {
+      console.error('Spider-Verse AR Error:', msg, url, line, err);
+      const st = document.getElementById('loading-status');
+      if (st) {
+        st.textContent = 'NOTICE: ' + (err?.message || msg || 'Synchronization issue');
+        st.style.color = '#ff526e';
+      }
+    };
+    window.onunhandledrejection = function(e) {
+      console.error('Spider-Verse AR Rejection:', e.reason);
+      const st = document.getElementById('loading-status');
+      if (st) {
+        st.textContent = 'NOTICE: ' + (e.reason?.message || e.reason || 'Hardware / network wait');
+        st.style.color = '#ff526e';
+      }
+    };
+  </script>
+
   <!-- Performance Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,7 +65,7 @@
   <link rel="modulepreload" href="js/renderer.js" />
   <link rel="modulepreload" href="js/gesture.js" />
   <link rel="modulepreload" href="js/multiverseMasks.js" />
-  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs" />
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs" crossorigin />
   <link rel="preload" as="image" href="assets/masks/miles.png" />
   <link rel="preload" as="image" href="assets/masks/gwen.png" />
 
