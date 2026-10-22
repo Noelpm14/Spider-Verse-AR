@@ -400,13 +400,23 @@ void main() {
 
     openPortalBtn?.addEventListener('click', () => {
       openPortalBtn.innerHTML = `<span class="relative z-10 flex items-center gap-space-sm drop-shadow-[2px_2px_0_#000000]"><span class="material-symbols-outlined text-3xl animate-spin">refresh</span>SUITING UP…</span>`;
-      if (typeof window.startSpiderAR === 'function') {
-        window.startSpiderAR('miles');
-      } else {
-        setTimeout(() => {
-          if (typeof window.startSpiderAR === 'function') window.startSpiderAR('miles');
-        }, 150);
-      }
+      let attempts = 0;
+      const tryStart = () => {
+        attempts++;
+        if (typeof window.startSpiderAR === 'function') {
+          window.startSpiderAR('miles');
+        } else if (attempts < 50) {
+          setTimeout(tryStart, 100);
+        } else {
+          const loadingScreen = document.getElementById('loading-screen');
+          const landingPage = document.getElementById('landing-page');
+          if (loadingScreen && landingPage) {
+            landingPage.classList.add('hidden');
+            loadingScreen.classList.remove('hidden');
+          }
+        }
+      };
+      tryStart();
     });
   })();
 </script></main>

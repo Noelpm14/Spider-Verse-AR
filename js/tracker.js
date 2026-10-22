@@ -42,36 +42,6 @@ export const FACE_IDX = {
   rightEyeOuter: 263,
 };
 
-const MODEL_CACHE_NAME = 'spiderverse-models-v1';
-
-/**
- * Cache vision task model binaries in browser CacheStorage
- * to eliminate repeat multi-megabyte downloads.
- */
-async function getCachedModelBuffer(modelUrl) {
-  if (typeof window !== 'undefined' && 'caches' in window) {
-    try {
-      const cache = await caches.open(MODEL_CACHE_NAME);
-      const cachedResponse = await cache.match(modelUrl);
-      if (cachedResponse) {
-        const buf = await cachedResponse.arrayBuffer();
-        if (buf && buf.byteLength > 1000) {
-          return new Uint8Array(buf);
-        }
-      }
-      const response = await fetch(modelUrl, { mode: 'cors' });
-      if (response.ok) {
-        cache.put(modelUrl, response.clone()).catch(() => {});
-        const buf = await response.arrayBuffer();
-        return new Uint8Array(buf);
-      }
-    } catch (cacheErr) {
-      console.warn('CacheStorage access fallback:', cacheErr);
-    }
-  }
-  return null;
-}
-
 // ─── TrackerManager ───────────────────────────────────────────────────────
 export class TrackerManager {
   constructor() {
@@ -109,22 +79,23 @@ export class TrackerManager {
     }
 
     onProgress(40, 'Initializing Hand Landmarker…');
-    const handBuffer = await getCachedModelBuffer(HAND_MODEL);
 
     try {
       this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
-        baseOptions: handBuffer
-          ? { modelAssetBuffer: handBuffer, delegate: 'GPU' }
-          : { modelAssetPath: HAND_MODEL, delegate: 'GPU' },
+        baseOptions: {
+          modelAssetPath: HAND_MODEL,
+          delegate: 'GPU',
+        },
         runningMode: 'VIDEO',
         numHands: 2,
       });
     } catch (gpuErr) {
       console.warn('HandLandmarker GPU delegate failed, falling back to CPU:', gpuErr);
       this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
-        baseOptions: handBuffer
-          ? { modelAssetBuffer: handBuffer, delegate: 'CPU' }
-          : { modelAssetPath: HAND_MODEL, delegate: 'CPU' },
+        baseOptions: {
+          modelAssetPath: HAND_MODEL,
+          delegate: 'CPU',
+        },
         runningMode: 'VIDEO',
         numHands: 2,
       });
@@ -132,22 +103,23 @@ export class TrackerManager {
     this.handReady = true;
 
     onProgress(70, 'Initializing Face Landmarker…');
-    const faceBuffer = await getCachedModelBuffer(FACE_MODEL);
 
     try {
       this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
-        baseOptions: faceBuffer
-          ? { modelAssetBuffer: faceBuffer, delegate: 'GPU' }
-          : { modelAssetPath: FACE_MODEL, delegate: 'GPU' },
+        baseOptions: {
+          modelAssetPath: FACE_MODEL,
+          delegate: 'GPU',
+        },
         runningMode: 'VIDEO',
         numFaces: 1,
       });
     } catch (gpuErr) {
       console.warn('FaceLandmarker GPU delegate failed, falling back to CPU:', gpuErr);
       this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
-        baseOptions: faceBuffer
-          ? { modelAssetBuffer: faceBuffer, delegate: 'CPU' }
-          : { modelAssetPath: FACE_MODEL, delegate: 'CPU' },
+        baseOptions: {
+          modelAssetPath: FACE_MODEL,
+          delegate: 'CPU',
+        },
         runningMode: 'VIDEO',
         numFaces: 1,
       });

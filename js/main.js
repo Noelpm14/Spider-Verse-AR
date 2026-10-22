@@ -138,6 +138,15 @@ function setProgress(pct, label) {
     if (btnLabel) btnLabel.textContent = "PORTAL READY // ENTERING NOW";
     if (btnIcon) btnIcon.textContent = "bolt";
     if (mainBtn) mainBtn.classList?.add("bg-white", "text-black");
+  } else if (pct === 0) {
+    if (btnLabel) btnLabel.textContent = "TAP TO RETRY";
+    if (btnIcon) btnIcon.textContent = "refresh";
+    if (mainBtn) {
+      mainBtn.onclick = () => {
+        isBootstrapping = false;
+        bootstrap(currentFilter);
+      };
+    }
   } else if (btnLabel) {
     btnLabel.textContent = label.toUpperCase();
   }
@@ -347,6 +356,15 @@ async function bootstrap(targetUniverse) {
     }
 
     setProgress(100, 'PORTAL SYNCHRONIZED!');
+    window._spiderArReadyCallback = () => {
+      if (isRunning) return;
+      isRunning = true;
+      startTime = performance.now();
+      if (maskStatusText) maskStatusText.textContent = maskEnabled ? 'ON' : 'OFF';
+      toggleMaskBtn?.classList?.toggle('off', !maskEnabled);
+      showSection(arSection);
+      rafId = requestAnimationFrame(loop);
+    };
     await new Promise(r => setTimeout(r, 400));
 
     isRunning = true;
