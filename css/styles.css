@@ -221,7 +221,7 @@ body.ar-active {
   background: rgba(18, 18, 24, 0.96);
   border: 3px solid #E62B2B;
   box-shadow: 6px 6px 0 #000;
-  z-index: 250;
+  z-index: 9999;
   padding: 14px 20px;
   backdrop-filter: blur(10px);
   transition: opacity 0.3s, transform 0.3s;
@@ -615,7 +615,7 @@ body.ar-active {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.85);
   display: flex; align-items: center; justify-content: center;
-  z-index: 200;
+  z-index: 100000;
 }
 .modal-box {
   background: var(--white);

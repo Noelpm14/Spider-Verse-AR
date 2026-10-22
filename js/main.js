@@ -54,6 +54,14 @@ acceptConsentBtn?.addEventListener('click', () => {
   trackEvent('consent_accepted');
 });
 
+// Allow reopening cookie banner anytime
+window.showCookieBanner = () => {
+  consentBanner?.classList?.remove('hidden');
+};
+document.getElementById('cookie-settings-btn')?.addEventListener('click', () => {
+  consentBanner?.classList?.remove('hidden');
+});
+
 // ─── State ────────────────────────────────────────────────────────────────
 let tracker           = null;
 let glRender          = null;
@@ -178,6 +186,11 @@ mosaicWaves.init(mosaicCanvas);
 
 // ─── Camera ──────────────────────────────────────────────────────────────
 async function startCamera() {
+  if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function') {
+    permDenied?.classList?.remove('hidden');
+    throw new Error('Camera access requires HTTPS or is not supported in this browser.');
+  }
+
   try {
     let stream;
     try {
@@ -212,7 +225,7 @@ async function startCamera() {
 
     return stream;
   } catch (err) {
-    permDenied?.classList.remove('hidden');
+    permDenied?.classList?.remove('hidden');
     throw err;
   }
 }
@@ -376,9 +389,12 @@ async function bootstrap(targetUniverse) {
     trackEvent('experience_started');
   } catch (err) {
     console.error('Bootstrap failed:', err);
-    setProgress(0, 'ERROR: ' + err.message);
+    setProgress(0, 'ERROR: ' + (err.message || 'Initialization failed'));
     trackEvent('experience_error', { error: err.message });
     mosaicWaves.start();
+    if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError' || err.message?.includes('Camera') || err.message?.includes('Permission')) {
+      permDenied?.classList?.remove('hidden');
+    }
   } finally {
     isBootstrapping = false;
   }
