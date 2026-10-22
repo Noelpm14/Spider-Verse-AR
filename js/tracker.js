@@ -56,19 +56,24 @@ export class TrackerManager {
    * @param {function} onProgress  — (pct: number, label: string) => void
    */
   async init(onProgress) {
-    onProgress(5, 'Loading MediaPipe Vision runtime…');
+    onProgress(10, 'Loading MediaPipe Vision runtime…');
 
     let visionModule;
     try {
       visionModule = await import(MEDIAPIPE_ESM);
     } catch (e1) {
       console.warn('Primary jsDelivr import failed, attempting backup from esm.sh…', e1);
-      visionModule = await import(MEDIAPIPE_BACKUP);
+      try {
+        visionModule = await import(MEDIAPIPE_BACKUP);
+      } catch (e2) {
+        console.warn('Backup esm.sh import failed, attempting unpkg…', e2);
+        visionModule = await import('https://unpkg.com/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');
+      }
     }
 
     const { FilesetResolver, HandLandmarker, FaceLandmarker } = visionModule;
 
-    onProgress(20, 'Downloading WASM runtime…');
+    onProgress(25, 'Downloading WASM runtime…');
 
     let vision;
     try {
@@ -78,7 +83,7 @@ export class TrackerManager {
       vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm');
     }
 
-    onProgress(40, 'Initializing Hand Landmarker…');
+    onProgress(50, 'Initializing Hand Landmarker…');
 
     try {
       this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
@@ -102,7 +107,7 @@ export class TrackerManager {
     }
     this.handReady = true;
 
-    onProgress(70, 'Initializing Face Landmarker…');
+    onProgress(75, 'Initializing Face Landmarker…');
 
     try {
       this.faceLandmarker = await FaceLandmarker.createFromOptions(vision, {

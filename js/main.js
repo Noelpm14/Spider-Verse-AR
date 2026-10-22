@@ -43,13 +43,19 @@ const maskStatusText   = document.getElementById('mask-status-text');
 const consentBanner    = document.getElementById('consent-banner');
 const acceptConsentBtn = document.getElementById('accept-consent-btn');
 
-// Initialize Cookie & Privacy Banner
-if (consentBanner && !localStorage.getItem('spiderverse_consent')) {
-  consentBanner.classList?.remove('hidden');
+// Initialize Cookie & Privacy Banner (safe in Private/Incognito/Restricted modes)
+try {
+  if (consentBanner && !localStorage.getItem('spiderverse_consent')) {
+    consentBanner.classList?.remove('hidden');
+  }
+} catch {
+  consentBanner?.classList?.remove('hidden');
 }
 
 acceptConsentBtn?.addEventListener('click', () => {
-  localStorage.setItem('spiderverse_consent', 'true');
+  try {
+    localStorage.setItem('spiderverse_consent', 'true');
+  } catch {}
   consentBanner?.classList?.add('hidden');
   trackEvent('consent_accepted');
 });
@@ -445,6 +451,10 @@ cancelLoadingBtn?.addEventListener('click', () => {
 });
 
 // Expose global methods for landing page integration
+window._spiderBootstrapHandler = function(universe) {
+  bootstrap(universe);
+};
+
 window.startSpiderAR = function(universe) {
   bootstrap(universe);
 };
@@ -454,6 +464,32 @@ window.setSpiderUniverse = function(universe) {
     setFilter(universe);
   }
 };
+
+// If a universe was already requested before main.js finished loading:
+if (window._spiderQueuedUniverse) {
+  bootstrap(window._spiderQueuedUniverse);
+}
+
+// Connect direct action handlers for reliable initiation
+enterBtn?.addEventListener('click', () => {
+  bootstrap('miles');
+});
+
+const mainActionBtn = document.getElementById('main-action-btn');
+mainActionBtn?.addEventListener('click', () => {
+  if (!isRunning && !isBootstrapping) {
+    bootstrap(currentFilter || 'miles');
+  } else if (window._spiderArReadyCallback) {
+    window._spiderArReadyCallback();
+  }
+});
+
+const spiderCore = document.getElementById('spider-core');
+spiderCore?.addEventListener('click', () => {
+  if (!isRunning && !isBootstrapping) {
+    bootstrap(currentFilter || 'miles');
+  }
+});
 
 // Single button to cycle filter (mirrors Tab key)
 cycleFilterBtn?.addEventListener('click', cycleFilter);

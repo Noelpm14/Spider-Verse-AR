@@ -38,7 +38,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://storage.googleapis.com" crossorigin />
   <link rel="dns-prefetch" href="https://storage.googleapis.com" />
+  <link rel="modulepreload" href="js/main.js" />
+  <link rel="modulepreload" href="js/tracker.js" />
+  <link rel="modulepreload" href="js/shaders.js" />
+  <link rel="modulepreload" href="js/renderer.js" />
+  <link rel="modulepreload" href="js/gesture.js" />
+  <link rel="modulepreload" href="js/multiverseMasks.js" />
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs" />
   <link rel="preload" as="image" href="assets/masks/miles.png" />
   <link rel="preload" as="image" href="assets/masks/gwen.png" />
 
@@ -396,27 +404,24 @@ void main() {
 </section>
 <script>
   (function initSpiderVerseLanding() {
-    const openPortalBtn = document.getElementById('open-portal-btn');
+    window._spiderQueuedUniverse = null;
+    window.startSpiderAR = function(universe) {
+      window._spiderQueuedUniverse = universe || 'miles';
+      const landingPage = document.getElementById('landing-page');
+      const loadingScreen = document.getElementById('loading-screen');
+      if (landingPage && loadingScreen) {
+        landingPage.classList.add('hidden');
+        loadingScreen.classList.remove('hidden');
+      }
+      if (typeof window._spiderBootstrapHandler === 'function') {
+        window._spiderBootstrapHandler(window._spiderQueuedUniverse);
+      }
+    };
 
+    const openPortalBtn = document.getElementById('open-portal-btn');
     openPortalBtn?.addEventListener('click', () => {
       openPortalBtn.innerHTML = `<span class="relative z-10 flex items-center gap-space-sm drop-shadow-[2px_2px_0_#000000]"><span class="material-symbols-outlined text-3xl animate-spin">refresh</span>SUITING UP…</span>`;
-      let attempts = 0;
-      const tryStart = () => {
-        attempts++;
-        if (typeof window.startSpiderAR === 'function') {
-          window.startSpiderAR('miles');
-        } else if (attempts < 50) {
-          setTimeout(tryStart, 100);
-        } else {
-          const loadingScreen = document.getElementById('loading-screen');
-          const landingPage = document.getElementById('landing-page');
-          if (loadingScreen && landingPage) {
-            landingPage.classList.add('hidden');
-            loadingScreen.classList.remove('hidden');
-          }
-        }
-      };
-      tryStart();
+      window.startSpiderAR('miles');
     });
   })();
 </script></main>
@@ -575,22 +580,22 @@ void main() {
             <span class="w-2 h-2 bg-hero-red inline-block"></span>
             DIMENSIONAL INGESTION
           </span>
-          <span class="text-hero-red font-bold text-sm tracking-wider" id="progress-val">15%</span>
+          <span class="text-hero-red font-bold text-sm tracking-wider" id="progress-val">10%</span>
         </div>
         <!-- Segmented Comic Progress Bar -->
         <div class="w-full h-5 bg-card-bg border-2 border-black p-0.5 slab-shadow-red flex gap-1 overflow-hidden" id="progress-bar-wrap">
-          <div class="h-full bg-hero-red transition-all duration-300 w-[15%] shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]" id="progress-fill"></div>
+          <div class="h-full bg-hero-red transition-all duration-300 w-[10%] shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]" id="progress-fill"></div>
         </div>
         <div class="flex items-center justify-between font-mono text-[10px] text-neutral-400 mt-1">
-          <span id="loading-buffer">TENSOR BUFFER: 412 MB</span>
-          <span id="loading-latency">LATENCY: 2.1 MS</span>
+          <span id="loading-buffer">TENSOR BUFFER: READY</span>
+          <span id="loading-latency">LATENCY: CALIBRATING</span>
         </div>
       </div>
 
       <!-- Primary Action CTA -->
       <div class="w-full max-w-md mt-5 flex gap-3 relative z-10">
         <button class="flex-1 py-3 px-4 bg-hero-red hover:bg-hero-red-light active:translate-x-0.5 active:translate-y-0.5 text-black font-headline text-2xl tracking-wider uppercase border-2 border-black slab-shadow-red flex items-center justify-center gap-2 transition-all cursor-pointer" id="main-action-btn" type="button">
-          <span id="btn-label">ALIGNING SPATIAL MESH…</span>
+          <span id="btn-label">INITIALIZING HARDWARE…</span>
           <span class="material-symbols-outlined text-2xl" id="btn-icon">cyclone</span>
         </button>
         <button class="py-3 px-4 bg-card-bg hover:bg-card-high border-2 border-black text-hero-red font-mono text-xs uppercase font-bold slab-shadow-red flex items-center justify-center transition-colors cursor-pointer" id="ping-btn" title="Ping Telemetry Anomaly" type="button">
