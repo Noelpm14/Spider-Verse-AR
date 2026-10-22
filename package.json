@@ -1,0 +1,24 @@
+{
+  "name": "spider-verse-ar",
+  "version": "1.0.0",
+  "description": "Browser-native Spider-Verse Augmented Reality experience with real-time AI hand/face tracking and WebGL comic shaders.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "spider-verse",
+    "augmented-reality",
+    "mediapipe",
+    "webgl",
+    "shaders",
+    "webrtc"
+  ],
+  "author": "Spider-Verse AR Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

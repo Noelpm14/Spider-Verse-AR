@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="shell-type" content="web_standard" />
+  <title>Spider-Verse AR | Dimension Telemetry & Multiverse Tracking</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Real-time Spider-Verse Augmented Reality experience in your browser. Track gestures, summon interdimensional portals, and wear authentic Multiverse masks 100% client-side." />
+  <meta name="keywords" content="Spider-Verse, Augmented Reality, WebGL Shaders, MediaPipe, AI Hand Tracking, Face Tracking, Miles Morales, Spider-Gwen, Spider-Man Noir, WebXR" />
+  <meta name="author" content="Spider-Verse AR Team" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://spiderverse-ar.local/" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spiderverse-ar.local/" />
+  <meta property="og:title" content="Spider-Verse AR | Step Into The Multiverse" />
+  <meta property="og:description" content="Experience real-time Spider-Verse shaders, gesture-controlled multiverse portals, and authentic character masks running 100% in your browser." />
+  <meta property="og:image" content="assets/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Spider-Verse AR" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://spiderverse-ar.local/" />
+  <meta name="twitter:title" content="Spider-Verse AR | Step Into The Multiverse" />
+  <meta name="twitter:description" content="Real-time Spider-Verse AR with MediaPipe AI & WebGL comic shaders. Client-side & private." />
+  <meta name="twitter:image" content="assets/og-preview.png" />
+
+  <!-- Performance Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://storage.googleapis.com" />
+  <link rel="preload" as="image" href="assets/masks/miles.png" />
+  <link rel="preload" as="image" href="assets/masks/gwen.png" />
+
+  <!-- Typography & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Epilogue:wght@400;500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Comic+Neue:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+
+  <!-- Tailwind & Config -->
+  <style>
+    @layer base {
+      html {
+        scroll-behavior: smooth;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"hero-red":"#ff1744","hero-red-dark":"#b70028","hero-red-light":"#ff526e","hero-red-glow":"rgba(255, 23, 68, 0.35)","void-bg":"#08080b","card-bg":"#0e0e14","card-high":"#161620","card-border":"rgba(255, 23, 68, 0.25)","surface-container-high":"#2a292e","secondary":"#ffffff","tertiary-fixed-dim":"#e9c400","surface-container-lowest":"#0e0e12","on-tertiary-fixed":"#221b00","on-background":"#e4e1e7","on-primary-container":"#5b0011","error-container":"#93000a","primary":"#ffb3b3","surface-container-low":"#1b1b1f","surface-tint":"#ffb3b3","tertiary":"#e9c400","inverse-on-surface":"#303034","on-secondary":"#003737","on-tertiary":"#3a3000","secondary-fixed-dim":"#00dddd","tertiary-container":"#c9a800","secondary-fixed":"#00fbfb","inverse-surface":"#e4e1e7","surface-dim":"#131317","on-secondary-container":"#007070","on-primary-fixed":"#400009","on-secondary-fixed":"#002020","primary-fixed-dim":"#ffb3b3","secondary-container":"#00fbfb","on-tertiary-container":"#4c3e00","error":"#ffb4ab","on-surface":"#e4e1e7","surface-container-highest":"#353439","on-error":"#690005","outline":"#ae8787","on-primary":"#680014","on-surface-variant":"#e8bcbb","surface-variant":"#353439","primary-container":"#ff525f","on-secondary-fixed-variant":"#004f4f","tertiary-fixed":"#ffe170","inverse-primary":"#bf002e","surface-container":"#1f1f24","primary-fixed":"#ffdad9","on-error-container":"#ffdad6","background":"#131317","on-tertiary-fixed-variant":"#544600","surface-bright":"#39393d","outline-variant":"#5e3f3e","surface":"#131317","on-primary-fixed-variant":"#920021"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1rem","space-xl":"2.5rem","space-xs":"0.25rem","gutter-mobile":"1rem","gutter":"1.5rem","margin":"2.5rem","space-lg":"1.5rem","space-2xl":"4rem","space-sm":"0.5rem","margin-mobile":"1rem"},"fontFamily":{"body-lg":["Epilogue"],"headline-xl":["Bebas Neue"],"headline-xl-mobile":["Bebas Neue"],"headline-sm":["Bebas Neue"],"headline-lg":["Bebas Neue"],"body-sm":["Epilogue"],"label-lg":["Space Mono"],"body-md":["Epilogue"],"label-sm":["Space Mono"],"headline-lg-mobile":["Bebas Neue"],"label-md":["Space Mono"],"headline-md":["Bebas Neue"]},"fontSize":{"body-lg":["18px",{"lineHeight":"28px","fontWeight":"500"}],"headline-xl":["72px",{"lineHeight":"72px","letterSpacing":"2px","fontWeight":"400"}],"headline-xl-mobile":["44px",{"lineHeight":"44px","letterSpacing":"1.5px","fontWeight":"400"}],"headline-sm":["24px",{"lineHeight":"28px","letterSpacing":"0.5px","fontWeight":"400"}],"headline-lg":["48px",{"lineHeight":"48px","letterSpacing":"1.5px","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"20px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"1px","fontWeight":"700"}],"body-md":["15px",{"lineHeight":"24px","fontWeight":"400"}],"label-sm":["10px",{"lineHeight":"14px","letterSpacing":"1.5px","fontWeight":"700"}],"headline-lg-mobile":["32px",{"lineHeight":"34px","letterSpacing":"1px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.5px","fontWeight":"400"}],"headline-md":["32px",{"lineHeight":"36px","letterSpacing":"1px","fontWeight":"400"}]}}}}</script>
+
+  <!-- Project CSS (AR HUD, Modals, Comic Effects) -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-surface-container-lowest font-body-md text-on-surface antialiased">
+
+  <!-- Landing Page -->
+  <div id="landing-page" class="w-full">
+    <header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_4px_0_#000000]">
+  <div class="h-20 w-full px-gutter flex items-center justify-between gap-space-md">
+    <div class="flex items-center gap-space-md shrink-0">
+      <a href="#" class="flex items-center gap-space-sm cursor-pointer select-none group">
+        <img alt="Spider-Verse Insignia Logo" class="h-8 w-auto object-contain group-hover:scale-110 transition-transform" src="https://lh3.googleusercontent.com/aida/AEtjO1VSOwonE9BjlEF8n8u5ekcYJGeWRduf2c-NwO7o73Awzr-QJjZowWbhtGZUCILYxXhyAyCRT_kNr48JhR4ikloo2PQCm_Pe3vl-9j1zmVt256iM19rclFS4W-g2nQYFYk9UiYiCKRz7DDR_7o_3JRuRfZrVKHi25EtujYIXl3hex_tHYzhO_VIeu39ktUM3g1KWDA68HWkj9WyKoY6pQGlv8-anjGEQ3I0QGhItVLoNybCpIvAOip2GyRA"/>
+        <div class="flex flex-col">
+          <span class="font-headline-sm text-headline-sm tracking-wider uppercase text-secondary-fixed leading-none drop-shadow-[2px_2px_0_#000000]">SPIDER-VERSE AR</span>
+          <span class="font-label-sm text-label-sm text-tertiary-fixed tracking-widest">DIMENSION TELEMETRY</span>
+        </div>
+      </a>
+      <div class="hidden xl:inline-flex items-center px-space-xs py-0.5 bg-surface-container-low shadow-[2px_2px_0_#000000]">
+        <span class="font-label-sm text-label-sm text-secondary-fixed tracking-widest">[ EARTH-TRN700 ]</span>
+      </div>
+    </div>
+
+    <div class="hidden lg:flex items-center gap-space-md shrink-0">
+      <div class="flex items-center gap-space-sm px-space-sm py-1 bg-surface-container shadow-[2px_2px_0_#000000]">
+        <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
+        <span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">MULTIVERSE ENGINE: READY</span>
+      </div>
+      <div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low shadow-[2px_2px_0_#000000]">
+        <span class="font-label-sm text-label-sm text-on-surface-variant">[ 60 FPS // LATENCY: 4MS ]</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-space-lg shrink-0">
+      <nav class="flex items-center gap-space-sm">
+        <a class="font-label-md px-space-md py-1.5 transition-all tracking-widest uppercase bg-primary text-on-primary shadow-[2px_2px_0_#000000] hover:bg-primary-fixed hover:-translate-y-0.5 cursor-pointer font-bold" href="#specs-section">SYSTEM SPECS</a>
+      </nav>
+    </div>
+  </div>
+</header>
+    <main class="w-full pt-20 bg-surface-container-lowest min-h-screen"><div class="flex flex-col w-full relative overflow-x-hidden">
+<!-- PROCEDURAL WEBGL MULTIVERSE SHADER INTEGRATION -->
+<!-- STITCH_SHADER_START:ANIMATION_2 class="absolute inset-0 w-full h-full pointer-events-none opacity-85" -->
+<div class="absolute inset-0 w-full h-full pointer-events-none opacity-85" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_2" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_2');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+// Simplex-style pseudo noise
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+void main() {
+    vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;
+    vec2 mouseNorm = (u_mouse - 0.5 * u_resolution.xy) / u_resolution.y;
+    uv += mouseNorm * 0.08; // dynamic parallax
+    
+    float dist = length(uv);
+    float angle = atan(uv.y, uv.x);
+    
+    // Comic Halftone Ben-Day grid calculation
+    vec2 gridUV = gl_FragCoord.xy / 12.0;
+    vec2 gridFract = fract(gridUV) - 0.5;
+    float dotDist = length(gridFract);
+    
+    // Multiverse warp tunnel waves
+    float wave = sin(dist * 18.0 - u_time * 2.5 + sin(angle * 6.0));
+    float n = noise(uv * 4.0 + vec2(u_time * 0.2, -u_time * 0.15));
+    
+    // Halftone dot mask based on wave intensity
+    float dotRadius = clamp(0.15 + 0.35 * (wave * 0.5 + 0.5 + n * 0.3) - dist * 0.2, 0.02, 0.48);
+    float halftone = smoothstep(dotRadius, dotRadius - 0.05, dotDist);
+    
+    // Spider-Verse Color Palette
+    vec3 voidBg = vec3(0.04, 0.04, 0.06);     // #0A0A0E
+    vec3 neonRed = vec3(1.0, 0.09, 0.27);    // #FF1744
+    vec3 cyan = vec3(0.0, 1.0, 1.0);         // #00FFFF
+    vec3 magenta = vec3(1.0, 0.08, 0.58);    // #FF1493
+    vec3 yellow = vec3(1.0, 0.84, 0.0);      // #FFD600
+    
+    // Multiverse portal chromatic RGB glitch bands
+    float glitchOffset = sin(uv.y * 80.0 + u_time * 12.0) * step(0.96, sin(u_time * 3.5 + uv.y * 10.0)) * 0.03;
+    float r = sin(dist * 12.0 - u_time * 1.8 + glitchOffset);
+    float g = sin(dist * 12.0 - u_time * 1.8);
+    float b = sin(dist * 12.0 - u_time * 1.8 - glitchOffset);
+    
+    vec3 waveColor = neonRed * smoothstep(0.2, 0.9, r);
+    waveColor += cyan * smoothstep(0.4, 0.95, g) * 0.6;
+    waveColor += magenta * smoothstep(0.3, 0.92, b) * 0.7;
+    
+    // Center dimension portal glow
+    float centerPortal = exp(-dist * 2.8) * (0.8 + 0.2 * sin(u_time * 4.0));
+    vec3 portalColor = mix(neonRed, yellow, centerPortal) * centerPortal * 1.6;
+    
+    // Combine base with halftone dots and spider-verse spiderweb radial rays
+    float rays = abs(sin(angle * 8.0 + sin(dist * 8.0 - u_time)));
+    float webGrid = smoothstep(0.85, 0.92, rays) * smoothstep(1.0, 0.1, dist);
+    
+    vec3 finalColor = mix(voidBg, waveColor, halftone * 0.75 + 0.1);
+    finalColor += portalColor;
+    finalColor += cyan * webGrid * 0.35;
+    
+    // Subtle vignette
+    float vignette = smoothstep(1.4, 0.4, dist);
+    finalColor *= vignette;
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_2 -->
+<!-- BEN-DAY HALFTONE OVERLAY -->
+<div class="absolute inset-0 pointer-events-none opacity-30 mix-blend-overlay" style="background-image: radial-gradient(#e4e1e7 1.5px, transparent 1.5px); background-size: 10px 10px;"></div>
+<!-- AMBIENT SCANLINE MATRIX -->
+<div class="absolute inset-0 pointer-events-none opacity-10 bg-gradient-to-b from-transparent via-secondary-fixed/20 to-transparent bg-[length:100%_4px]"></div>
+<!-- HUD CORNER CALIBRATION RETICLES & MONOSPACE ANCHORS -->
+<div class="pointer-events-none absolute top-4 left-4 z-20 flex items-center gap-space-xs text-tertiary font-label-sm text-label-sm drop-shadow-[2px_2px_0_#000000]">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>X: 1610.42 // Y: 65.09 // Z: 90214.88</span>
+</div>
+<div class="pointer-events-none absolute top-4 right-4 z-20 hidden md:flex items-center gap-space-xs text-secondary-fixed font-label-sm text-label-sm drop-shadow-[2px_2px_0_#000000]">
+<span>DIMENSION_DRIFT: 0.003%</span>
+<span class="material-symbols-outlined text-sm">filter_center_focus</span>
+</div>
+<!-- ========================================== -->
+<!-- HERO STAGE                                 -->
+<!-- ========================================== -->
+<section class="relative z-10 w-full px-gutter pt-space-xl pb-space-2xl flex flex-col items-center justify-center text-center">
+<!-- TECH PILL BADGE -->
+<div class="inline-flex items-center gap-space-sm px-space-md py-1.5 bg-surface-container-lowest shadow-[4px_4px_0_#000000] border-2 border-tertiary mb-space-lg transform -rotate-1 hover:rotate-0 transition-transform">
+<span class="w-2.5 h-2.5 bg-primary-container animate-pulse shadow-[0_0_8px_#ff525f]"></span>
+<span class="font-label-md text-label-md text-secondary-fixed tracking-widest uppercase">
+        [ REAL-TIME COMPUTER VISION · 6 UNIVERSES ]
+      </span>
+<span class="hidden sm:inline-block font-label-sm text-label-sm px-1.5 py-0.5 bg-primary-container text-on-primary-container font-bold">
+        v3.4-WEBGPU
+      </span>
+</div>
+<!-- CHROMATIC GLITCH HERO HEADLINE -->
+<div class="relative mb-space-md max-w-5xl">
+<!-- Background comic blast burst decorative graphic -->
+<div class="absolute -top-12 -left-8 -right-8 -bottom-8 pointer-events-none opacity-20 flex items-center justify-center -z-10">
+<svg class="w-full h-full text-primary-container fill-current" preserveaspectratio="none" viewbox="0 0 100 100">
+<polygon points="50,0 60,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 40,35"></polygon>
+</svg>
+</div>
+<h1 class="font-headline-xl text-headline-xl tracking-tight uppercase flex flex-wrap items-center justify-center leading-none">
+<!-- SPIDER- (Neon Glitch Red) -->
+<span class="relative inline-block text-primary-container tracking-wider drop-shadow-[4px_4px_0_#000000] -rotate-2 transform">
+<span class="relative z-10">SPIDER-</span>
+<!-- Chromatic Split Silhouette -->
+<span aria-hidden="true" class="absolute top-0 left-0 text-secondary-fixed select-none -translate-x-[3px] translate-y-[2px] opacity-70 -z-10 mix-blend-screen">SPIDER-</span>
+</span>
+<!-- VERSE (Chiseled Pop) -->
+<span class="relative inline-block text-secondary tracking-widest drop-shadow-[5px_5px_0_#000000] rotate-1 transform ml-2">
+<span class="relative z-10">VERSE</span>
+<!-- Chromatic Split Magenta -->
+<span aria-hidden="true" class="absolute top-0 left-0 text-primary-container select-none translate-x-[3px] -translate-y-[2px] opacity-70 -z-10 mix-blend-screen">VERSE</span>
+</span>
+<span class="inline-block text-tertiary font-headline-xl text-headline-xl ml-3 drop-shadow-[4px_4px_0_#000000]">
+          AR
+        </span>
+</h1>
+</div>
+<!-- COMIC SOUND EFFECT BURST TAG -->
+<div class="inline-block mb-space-md transform rotate-3">
+<span class="font-headline-sm text-headline-sm bg-tertiary text-on-tertiary px-space-md py-0.5 shadow-[4px_4px_0_#000000] uppercase tracking-wider">
+        * THWIP! DIMENSIONAL SYNC ACTIVE *
+      </span>
+</div>
+<!-- HOOK / SUBHEADLINE -->
+<p class="max-w-3xl font-body-lg text-body-lg text-on-surface-variant font-medium tracking-wide mb-space-xl drop-shadow-[0_2px_4px_#000000]">
+      SYNC YOUR SENSORS. STEP INTO THE ANOMALY. ZERO HARDWARE REQUIRED — JUST YOUR BROWSER AND NEURAL WEBCAM TRACKING.
+    </p>
+<!-- CTAS & PRIMARY ACTIONS -->
+<div class="flex flex-col items-center gap-space-lg mb-space-xl">
+  <!-- Primary CTA: "SUIT UP NOW" -->
+  <button id="open-portal-btn" class="relative group px-12 py-5 bg-primary-container text-secondary font-headline-lg text-headline-lg uppercase tracking-wider shadow-[6px_6px_0_#000000] hover:shadow-[10px_10px_0_#000000] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-150 transform -rotate-1 active:translate-x-1 active:translate-y-1 active:shadow-[2px_2px_0_#000000] cursor-pointer" style="clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));" type="button">
+    <span class="relative z-10 flex items-center gap-space-sm drop-shadow-[2px_2px_0_#000000]">
+      <span class="material-symbols-outlined text-3xl">view_in_ar</span>
+      SUIT UP NOW
+    </span>
+    <div class="absolute inset-0 bg-tertiary opacity-0 group-hover:opacity-30 transition-opacity pointer-events-none"></div>
+  </button>
+</div>
+<!-- ZERO-STORAGE PRIVACY TRUST BADGE -->
+<div class="flex items-center gap-space-sm px-space-md py-1.5 bg-surface-container-low shadow-[3px_3px_0_#000000] text-on-surface-variant max-w-xl text-left">
+<span class="material-symbols-outlined text-secondary-fixed text-lg shrink-0" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<p class="font-label-sm text-label-sm leading-tight text-on-surface">
+        CAMERA STAYS CLIENT-SIDE · ZERO DATA TRANSMITTED · 100% ON-DEVICE TENSORFLOW WEBGPU PIPELINE
+      </p>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- MULTI-SENSORY TECH SPECS HUD STRIP         -->
+<!-- ========================================== -->
+<section id="specs-section" class="relative z-10 w-full bg-surface-container-low shadow-[0_4px_0_#000000] py-space-md px-gutter mb-space-xl">
+<div class="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Telemetry Item 1 -->
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container shadow-[2px_2px_0_#000000]">
+<div class="p-2 bg-surface-container-high text-secondary-fixed shadow-[2px_2px_0_#000000]">
+<span class="material-symbols-outlined text-xl">speed</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">LATENCY</span>
+<span class="font-headline-sm text-headline-sm text-secondary-fixed leading-tight">&lt; 12MS SYNCHRONOUS</span>
+</div>
+</div>
+<!-- Telemetry Item 2 -->
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container shadow-[2px_2px_0_#000000]">
+<div class="p-2 bg-surface-container-high text-primary-container shadow-[2px_2px_0_#000000]">
+<span class="material-symbols-outlined text-xl">grid_4x4</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">FACIAL MESH</span>
+<span class="font-headline-sm text-headline-sm text-secondary leading-tight">468 3D LANDMARKS</span>
+</div>
+</div>
+<!-- Telemetry Item 3 -->
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container shadow-[2px_2px_0_#000000]">
+<div class="p-2 bg-surface-container-high text-tertiary shadow-[2px_2px_0_#000000]">
+<span class="material-symbols-outlined text-xl">memory</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">RENDER PIPELINE</span>
+<span class="font-headline-sm text-headline-sm text-tertiary leading-tight">60 FPS WEBGPU INTEL</span>
+</div>
+</div>
+<!-- Telemetry Item 4 -->
+<div class="flex items-center gap-space-md p-space-sm bg-surface-container shadow-[2px_2px_0_#000000]">
+<div class="p-2 bg-surface-container-high text-primary-container shadow-[2px_2px_0_#000000]">
+<span class="material-symbols-outlined text-xl">hub</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">ANOMALY FIELD</span>
+<span class="font-headline-sm text-headline-sm text-secondary leading-tight flex items-center gap-1">
+            STABLE <span class="w-2 h-2 rounded-full bg-secondary-fixed animate-ping"></span>
+</span>
+</div>
+</div>
+</div>
+</section>
+<script>
+  (function initSpiderVerseLanding() {
+    const openPortalBtn = document.getElementById('open-portal-btn');
+
+    openPortalBtn?.addEventListener('click', () => {
+      openPortalBtn.innerHTML = `<span class="relative z-10 flex items-center gap-space-sm drop-shadow-[2px_2px_0_#000000]"><span class="material-symbols-outlined text-3xl animate-spin">refresh</span>SUITING UP…</span>`;
+      if (typeof window.startSpiderAR === 'function') {
+        window.startSpiderAR('miles');
+      } else {
+        setTimeout(() => {
+          if (typeof window.startSpiderAR === 'function') window.startSpiderAR('miles');
+        }, 150);
+      }
+    });
+  })();
+</script></main>
+    <footer class="w-full bg-surface-container-low py-space-xl shadow-[0_-4px_0_#000000]"><div class="w-full px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col items-center md:items-start gap-space-xs"><div class="inline-block px-space-sm py-0.5 bg-surface-container-lowest shadow-[2px_2px_0_#000000]"><span class="font-label-sm text-label-sm text-tertiary-fixed">[ CAMERA STAYS CLIENT-SIDE · ZERO DATA COLLECTED ]</span></div><p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">Spider-Verse AR is an experimental fan tribute experience. All trademarks belong to their respective dimensional copyright holders.</p></div><div class="flex flex-wrap items-center justify-center gap-space-md"><a class="font-label-sm text-label-sm text-secondary-fixed hover:text-secondary tracking-widest uppercase transition-colors" data-path="interdimensional-protocol" href="privacy.html#protocol">Interdimensional Protocol</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface tracking-widest uppercase transition-colors" data-path="privacy-telemetry" href="privacy.html">Privacy Policy</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface tracking-widest uppercase transition-colors" data-path="system-terms" href="terms.html">Terms of Spatial Sync</a></div></div></footer>
+  </div>
+
+  <!-- Cookie & Privacy Banner -->
+  <div id="consent-banner" class="consent-banner hidden" role="dialog" aria-label="Privacy and Cookie Notice">
+    <div class="consent-content">
+      <span class="material-symbols-outlined text-xl text-primary">privacy_tip</span>
+      <p>
+        <strong>MULTIVERSE PRIVACY NOTICE:</strong> All camera video and AI hand/face tracking are processed <strong>100% locally on your device</strong>. No images, videos, or biometric data ever leave your browser.
+      </p>
+      <div class="consent-actions">
+        <a href="privacy.html" class="consent-link">LEARN MORE</a>
+        <button id="accept-consent-btn" class="consent-btn">I UNDERSTAND</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Page -->
+  <section id="loading-screen" class="hidden fixed inset-0 z-[99999] overflow-y-auto bg-void-bg text-neutral-100 font-body min-h-screen flex flex-col justify-between selection:bg-hero-red selection:text-white relative" role="status" aria-live="polite">
+    <!-- Multiverse Interactive WebGL Background Canvas -->
+    <canvas class="fixed inset-0 w-full h-full pointer-events-none z-0" id="multiverse-bg-canvas" style="opacity: 0.85;"></canvas>
+    
+    <!-- Unified Red Comic Ambient Atmosphere Overlay -->
+    <div class="fixed inset-0 bg-halftone pointer-events-none z-0"></div>
+    <div class="fixed inset-0 bg-grid-crimson pointer-events-none z-0"></div>
+    <!-- Subtle glowing radial vignette -->
+    <div class="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_at_center,rgba(255,23,68,0.12)_0%,rgba(8,8,11,0.95)_75%)]"></div>
+
+    <!-- Sleek Minimal Header -->
+    <header class="relative z-20 w-full border-b border-hero-red/30 bg-card-bg/90 backdrop-blur-md px-6 py-4">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <!-- Brand & Earth Telemetry -->
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 bg-hero-red text-black flex items-center justify-center font-black slab-shadow-red border-2 border-black">
+            <svg class="w-6 h-6 fill-black" viewBox="0 0 24 24">
+              <path d="M12 2L14.5 7H17L19 4L18 9L21 11L18 13L21 17L17 15L15 22L12 18L9 22L7 15L3 17L6 13L3 11L6 9L5 4L7 7H9.5L12 2Z"></path>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+              <span class="font-headline text-2xl tracking-wider text-white leading-none">SPIDER-VERSE AR</span>
+              <span class="px-1.5 py-0.5 bg-hero-red text-black font-mono text-[10px] font-bold border border-black uppercase tracking-wider">TELEMETRY</span>
+            </div>
+            <span class="font-mono text-xs text-hero-red-light tracking-widest" id="loading-dim-readout">[ EARTH-1610 // QUANTUM SYNC ]</span>
+          </div>
+        </div>
+
+        <!-- Frequency Visualizer, Audio Pill & Cancel Return -->
+        <div class="flex items-center gap-3">
+          <!-- Live Audio Waveform Bars -->
+          <div class="hidden sm:flex items-center gap-1 px-3 py-1.5 bg-card-high border border-hero-red/30 slab-shadow-red" id="equalizer">
+            <span class="w-1 bg-hero-red h-3 animate-pulse"></span>
+            <span class="w-1 bg-hero-red h-5 animate-pulse" style="animation-delay: 150ms"></span>
+            <span class="w-1 bg-hero-red h-2 animate-pulse" style="animation-delay: 300ms"></span>
+            <span class="w-1 bg-hero-red h-6 animate-pulse" style="animation-delay: 75ms"></span>
+            <span class="w-1 bg-hero-red h-4 animate-pulse" style="animation-delay: 220ms"></span>
+            <span class="font-mono text-[10px] text-hero-red-light ml-2 uppercase font-bold tracking-wider" id="freq-readout">44.1 kHz</span>
+          </div>
+
+          <!-- Audio toggle -->
+          <button aria-label="Toggle Sound" class="w-9 h-9 flex items-center justify-center bg-card-high border border-hero-red/40 hover:bg-hero-red hover:text-black transition-colors slab-shadow-red text-hero-red cursor-pointer" id="audio-toggle" type="button">
+            <span class="material-symbols-outlined text-[18px]" id="audio-icon">volume_up</span>
+          </button>
+
+          <!-- Cancel & Return Button -->
+          <button id="cancel-loading-btn" class="px-3 py-1.5 bg-card-high hover:bg-hero-red/20 border border-hero-red/40 text-hero-red font-mono text-xs uppercase tracking-wider slab-shadow-red transition-all cursor-pointer flex items-center gap-1" type="button">
+            <span class="material-symbols-outlined text-sm">close</span>
+            <span>CANCEL</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Hero Interactive Calibration Stage -->
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-6 md:py-8 max-w-5xl mx-auto w-full">
+      <!-- Title & Status Stamp -->
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-card-high border border-hero-red/40 font-mono text-xs text-hero-red tracking-widest mb-3 slab-shadow-red">
+          <span class="w-2 h-2 rounded-full bg-hero-red animate-ping"></span>
+          <span id="loading-badge">NEURAL RETICLE // HARMONIC LOCK</span>
+        </div>
+        <h1 class="font-headline text-5xl sm:text-6xl md:text-7xl tracking-wider text-white leading-none uppercase drop-shadow-[3px_3px_0_#000000]">
+          CALIBRATING ANOMALY <span class="text-hero-red" id="anomaly-tag">// 1610</span>
+        </h1>
+        <p class="font-body text-neutral-400 text-sm md:text-base max-w-lg mx-auto mt-2" id="loading-status">
+          Harmonizing quantum tensor mesh &amp; dimensional shaders. Interact with the reticle below to fine-tune spatial coordinates.
+        </p>
+      </div>
+
+      <!-- Hero Interactive Quantum Reticle Stage -->
+      <div class="relative w-full max-w-xs sm:max-w-sm aspect-square flex items-center justify-center select-none cursor-crosshair group" id="reticle-stage">
+        <!-- Ambient Backglow -->
+        <div class="absolute inset-4 rounded-full bg-hero-red/10 blur-2xl transition-all duration-300 group-hover:bg-hero-red/20 pointer-events-none"></div>
+
+        <!-- Corner HUD Target Brackets -->
+        <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-hero-red pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-hero-red pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-hero-red pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-hero-red pointer-events-none"></div>
+
+        <!-- Outer Clockwise Rotating Calibrator Ring -->
+        <svg class="absolute inset-2 w-[calc(100%-1rem)] h-[calc(100%-1rem)] anim-spin-cw pointer-events-none" viewBox="0 0 400 400">
+          <circle cx="200" cy="200" fill="none" opacity="0.6" r="185" stroke="#ff1744" stroke-dasharray="8 12" stroke-width="1.5"></circle>
+          <circle cx="200" cy="200" fill="none" opacity="0.4" r="168" stroke="#ff1744" stroke-dasharray="2 6" stroke-width="1"></circle>
+          <line stroke="#ff1744" stroke-width="2" x1="200" x2="200" y1="8" y2="24"></line>
+          <line stroke="#ff1744" stroke-width="2" x1="200" x2="200" y1="376" y2="392"></line>
+          <line stroke="#ff1744" stroke-width="2" x1="8" x2="24" y1="200" y2="200"></line>
+          <line stroke="#ff1744" stroke-width="2" x1="376" x2="392" y1="200" y2="200"></line>
+        </svg>
+
+        <!-- Inner Counter-Clockwise Geometric Hex Ring -->
+        <svg class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] anim-spin-ccw pointer-events-none" viewBox="0 0 300 300">
+          <polygon fill="none" opacity="0.7" points="150,20 262,85 262,215 150,280 38,215 38,85" stroke="#ff1744" stroke-width="1.8"></polygon>
+          <circle cx="150" cy="150" fill="none" opacity="0.5" r="105" stroke="#ff1744" stroke-dasharray="16 8" stroke-width="1.2"></circle>
+        </svg>
+
+        <!-- Dynamic Crosshairs -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+          <div class="w-full h-[1px] bg-hero-red"></div>
+          <div class="h-full w-[1px] bg-hero-red absolute"></div>
+        </div>
+
+        <!-- Central Reactive Spider Icon Emblem -->
+        <div class="relative z-10 w-24 h-24 sm:w-28 sm:h-28 bg-card-bg border-2 border-hero-red flex items-center justify-center slab-shadow-red transition-transform duration-150 active:scale-95 group-hover:border-white" id="spider-core">
+          <svg class="w-14 h-14 sm:w-16 sm:h-16 fill-hero-red transition-all duration-200 drop-shadow-[0_0_12px_rgba(255,23,68,0.7)]" id="spider-svg" viewBox="0 0 100 100">
+            <polygon points="50,15 62,35 58,68 50,82 42,68 38,35"></polygon>
+            <circle cx="50" cy="24" fill="#ffffff" r="5"></circle>
+            <polyline fill="none" points="45,32 20,20 10,38" stroke="#ff1744" stroke-linecap="square" stroke-width="3"></polyline>
+            <polyline fill="none" points="42,42 16,42 8,62" stroke="#ff1744" stroke-linecap="square" stroke-width="3"></polyline>
+            <polyline fill="none" points="42,54 22,66 16,88" stroke="#ff1744" stroke-linecap="square" stroke-width="2.5"></polyline>
+            <polyline fill="none" points="44,65 30,82 24,96" stroke="#ff1744" stroke-linecap="square" stroke-width="2"></polyline>
+            <polyline fill="none" points="55,32 80,20 90,38" stroke="#ff1744" stroke-linecap="square" stroke-width="3"></polyline>
+            <polyline fill="none" points="58,42 84,42 92,62" stroke="#ff1744" stroke-linecap="square" stroke-width="3"></polyline>
+            <polyline fill="none" points="58,54 78,66 84,88" stroke="#ff1744" stroke-linecap="square" stroke-width="2.5"></polyline>
+            <polyline fill="none" points="56,65 70,82 76,96" stroke="#ff1744" stroke-linecap="square" stroke-width="2"></polyline>
+          </svg>
+          <span class="absolute -top-4 -right-4 px-2 py-0.5 bg-hero-red text-black font-headline text-lg rotate-12 border border-black shadow-[2px_2px_0_#000] opacity-0 transition-opacity pointer-events-none" id="thwip-tag">
+            * THWIP! *
+          </span>
+        </div>
+
+        <!-- Target Info Coordinates Badge -->
+        <div class="absolute bottom-2 inset-x-0 mx-auto w-fit px-3 py-1 bg-card-bg/95 border border-hero-red/60 font-mono text-[11px] text-hero-red-light tracking-widest slab-shadow-red flex items-center gap-2">
+          <span>FRUSTUM:</span>
+          <span class="font-bold text-white" id="coord-display">X: 1610.42 · Y: 65.09</span>
+        </div>
+      </div>
+
+      <!-- Unified Crimson Progress Track -->
+      <div class="w-full max-w-md mt-4 relative z-10">
+        <div class="flex items-center justify-between font-mono text-xs mb-1.5">
+          <span class="text-neutral-300 font-bold uppercase tracking-wider flex items-center gap-1">
+            <span class="w-2 h-2 bg-hero-red inline-block"></span>
+            DIMENSIONAL INGESTION
+          </span>
+          <span class="text-hero-red font-bold text-sm tracking-wider" id="progress-val">15%</span>
+        </div>
+        <!-- Segmented Comic Progress Bar -->
+        <div class="w-full h-5 bg-card-bg border-2 border-black p-0.5 slab-shadow-red flex gap-1 overflow-hidden" id="progress-bar-wrap">
+          <div class="h-full bg-hero-red transition-all duration-300 w-[15%] shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]" id="progress-fill"></div>
+        </div>
+        <div class="flex items-center justify-between font-mono text-[10px] text-neutral-400 mt-1">
+          <span id="loading-buffer">TENSOR BUFFER: 412 MB</span>
+          <span id="loading-latency">LATENCY: 2.1 MS</span>
+        </div>
+      </div>
+
+      <!-- Primary Action CTA -->
+      <div class="w-full max-w-md mt-5 flex gap-3 relative z-10">
+        <button class="flex-1 py-3 px-4 bg-hero-red hover:bg-hero-red-light active:translate-x-0.5 active:translate-y-0.5 text-black font-headline text-2xl tracking-wider uppercase border-2 border-black slab-shadow-red flex items-center justify-center gap-2 transition-all cursor-pointer" id="main-action-btn" type="button">
+          <span id="btn-label">ALIGNING SPATIAL MESH…</span>
+          <span class="material-symbols-outlined text-2xl" id="btn-icon">cyclone</span>
+        </button>
+        <button class="py-3 px-4 bg-card-bg hover:bg-card-high border-2 border-black text-hero-red font-mono text-xs uppercase font-bold slab-shadow-red flex items-center justify-center transition-colors cursor-pointer" id="ping-btn" title="Ping Telemetry Anomaly" type="button">
+          <span class="material-symbols-outlined text-xl">radar</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- Clean Minimal Footer -->
+    <footer class="relative z-20 w-full border-t border-hero-red/20 bg-card-bg/80 py-3 px-6 text-center">
+      <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-[11px] text-neutral-500">
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-hero-red"></span>
+          <span class="text-neutral-300 tracking-wider">100% LOCAL WEBGPU COMPUTE · ZERO BIOMETRIC TRANSMISSION</span>
+        </div>
+        <div class="flex items-center gap-4 text-neutral-400">
+          <span>BUILD: 1610.9-V</span>
+          <span>EARTH-TRN700 → EARTH-1610</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- AR Experience -->
+  <section id="ar-section" class="hidden">
+    <!-- Hidden video element used as source -->
+    <video id="webcam-video" autoplay playsinline muted></video>
+
+    <!-- Main rendering canvas -->
+    <canvas id="output-canvas"></canvas>
+
+    <!-- WebGL offscreen canvas for shader processing -->
+    <canvas id="gl-canvas" style="display:none;"></canvas>
+
+    <!-- HUD Overlay -->
+    <div class="hud">
+      <div class="hud-corner tl">
+        <span class="hud-label">SPIDER-VERSE AR</span>
+        <span class="hud-sub" id="fps-counter">● LIVE</span>
+      </div>
+
+      <!-- Universe Filter & Mask Toggle Buttons -->
+      <div class="hud-center top">
+        <button class="univ-btn cycle-btn" id="cycle-filter-btn" title="Cycle Filter [Tab or Pinch]">
+          FILTER: <span id="current-filter-name">MILES</span> <span class="tab-pill">TAB / PINCH</span>
+        </button>
+        <button class="univ-btn mask-btn off" id="toggle-mask-btn" title="Toggle Mask [M]">
+          MASK: <span id="mask-status-text">OFF</span> <span class="tab-pill">M</span>
+        </button>
+      </div>
+
+      <div class="hud-corner tr">
+        <div class="hud-indicators">
+          <span class="indicator" id="face-indicator">FACE</span>
+          <span class="indicator" id="pose-indicator">HANDS</span>
+        </div>
+      </div>
+      <div class="hud-corner bl">
+        <span class="hud-label" id="mode-label">MODE: STANDBY</span>
+      </div>
+      <div class="hud-corner br">
+        <div class="hud-controls">
+          <button class="ctrl-btn" id="screenshot-btn" title="Screenshot [S]"><span class="material-symbols-outlined text-base">photo_camera</span></button>
+          <button class="ctrl-btn" id="exit-btn" title="Exit [Esc]"><span class="material-symbols-outlined text-base">close</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comic caption bubble -->
+    <div class="speech-bubble" id="speech-bubble">
+      <span id="bubble-text">THWIP!</span>
+    </div>
+  </section>
+
+  <!-- Permission Denied Overlay -->
+  <div id="permission-denied" class="modal hidden">
+    <div class="modal-box">
+      <h2>Camera Access Denied</h2>
+      <p>Spider-Man needs his spider-sense! Please allow camera access and reload the page.</p>
+      <button onclick="location.reload()">RETRY</button>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script type="module" src="js/main.js"></script>
+
+<!-- Multiverse Loading WebGL Shader & Calibration Scripts -->
+<script>
+  (function initLoadingPortalShader() {
+    const canvas = document.getElementById('multiverse-bg-canvas');
+    if (!canvas) return;
+
+    function syncSize() {
+      const w = window.innerWidth || 1280;
+      const h = window.innerHeight || 720;
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+    }
+    window.addEventListener('resize', syncSize);
+    syncSize();
+
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+
+    const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+
+    const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+void main() {
+    vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / u_resolution.y;
+    vec2 mouseNorm = (u_mouse - 0.5 * u_resolution.xy) / u_resolution.y;
+    uv += mouseNorm * 0.08;
+    
+    float dist = length(uv);
+    float angle = atan(uv.y, uv.x);
+    
+    vec2 gridUV = gl_FragCoord.xy / 12.0;
+    vec2 gridFract = fract(gridUV) - 0.5;
+    float dotDist = length(gridFract);
+    
+    float wave = sin(dist * 18.0 - u_time * 2.5 + sin(angle * 6.0));
+    float n = noise(uv * 4.0 + vec2(u_time * 0.2, -u_time * 0.15));
+    
+    float dotRadius = clamp(0.15 + 0.35 * (wave * 0.5 + 0.5 + n * 0.3) - dist * 0.2, 0.02, 0.48);
+    float halftone = smoothstep(dotRadius, dotRadius - 0.05, dotDist);
+    
+    vec3 voidBg = vec3(0.04, 0.04, 0.06);
+    vec3 neonRed = vec3(1.0, 0.09, 0.27);
+    vec3 cyan = vec3(0.0, 1.0, 1.0);
+    vec3 magenta = vec3(1.0, 0.08, 0.58);
+    vec3 yellow = vec3(1.0, 0.84, 0.0);
+    
+    float glitchOffset = sin(uv.y * 80.0 + u_time * 12.0) * step(0.96, sin(u_time * 3.5 + uv.y * 10.0)) * 0.03;
+    float r = sin(dist * 12.0 - u_time * 1.8 + glitchOffset);
+    float g = sin(dist * 12.0 - u_time * 1.8);
+    float b = sin(dist * 12.0 - u_time * 1.8 - glitchOffset);
+    
+    vec3 waveColor = neonRed * smoothstep(0.2, 0.9, r);
+    waveColor += cyan * smoothstep(0.4, 0.95, g) * 0.6;
+    waveColor += magenta * smoothstep(0.3, 0.92, b) * 0.7;
+    
+    float centerPortal = exp(-dist * 2.8) * (0.8 + 0.2 * sin(u_time * 4.0));
+    vec3 portalColor = mix(neonRed, yellow, centerPortal) * centerPortal * 1.6;
+    
+    float rays = abs(sin(angle * 8.0 + sin(dist * 8.0 - u_time)));
+    float webGrid = smoothstep(0.85, 0.92, rays) * smoothstep(1.0, 0.1, dist);
+    
+    vec3 finalColor = mix(voidBg, waveColor, halftone * 0.75 + 0.1);
+    finalColor += portalColor;
+    finalColor += cyan * webGrid * 0.35;
+    
+    float vignette = smoothstep(1.4, 0.4, dist);
+    finalColor *= vignette;
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+
+    function cs(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
+    }
+    const prog = gl.createProgram();
+    gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+    gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const pos = gl.getAttribLocation(prog, 'a_position');
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+    const uTime = gl.getUniformLocation(prog, 'u_time');
+    const uRes = gl.getUniformLocation(prog, 'u_resolution');
+    const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    window.addEventListener('mousemove', (event) => {
+      mouse.x = event.clientX;
+      mouse.y = window.innerHeight - event.clientY;
+    });
+
+    function render(t) {
+      const screen = document.getElementById('loading-screen');
+      if (screen && !screen.classList?.contains('hidden')) {
+        syncSize();
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        if (uTime) gl.uniform1f(uTime, t * 0.001);
+        if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+        if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
+      requestAnimationFrame(render);
+    }
+    render(0);
+  })();
+
+  // Self-Contained Interactive Reticle Controls
+  (function initSpiderPortal() {
+    const reticleStage = document.getElementById('reticle-stage');
+    const spiderCore = document.getElementById('spider-core');
+    const thwipTag = document.getElementById('thwip-tag');
+    const coordDisplay = document.getElementById('coord-display');
+    const mainBtn = document.getElementById('main-action-btn');
+    const pingBtn = document.getElementById('ping-btn');
+    const audioToggle = document.getElementById('audio-toggle');
+    const audioIcon = document.getElementById('audio-icon');
+    const freqReadout = document.getElementById('freq-readout');
+
+    let soundActive = true;
+
+    if (reticleStage) {
+      reticleStage.addEventListener('mousemove', (e) => {
+        const rect = reticleStage.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        const coordX = (1610.0 + x * 2.5).toFixed(2);
+        const coordY = (65.0 + y * 1.8).toFixed(2);
+        if (coordDisplay) coordDisplay.textContent = `X: ${coordX} · Y: ${coordY}`;
+        if (spiderCore) spiderCore.style.transform = `translate(${x * 16}px, ${y * 16}px) rotate(${x * 8}deg)`;
+      });
+
+      reticleStage.addEventListener('mouseleave', () => {
+        if (spiderCore) spiderCore.style.transform = 'translate(0px, 0px) rotate(0deg)';
+        if (coordDisplay) coordDisplay.textContent = 'X: 1610.42 · Y: 65.09';
+      });
+
+      reticleStage.addEventListener('click', triggerThwip);
+    }
+
+    function triggerThwip() {
+      if (!spiderCore) return;
+      spiderCore.classList?.remove('glitch-active');
+      void spiderCore.offsetWidth;
+      spiderCore.classList?.add('glitch-active');
+
+      if (thwipTag) {
+        thwipTag.style.opacity = '1';
+        setTimeout(() => { thwipTag.style.opacity = '0'; }, 650);
+      }
+    }
+
+    if (pingBtn) pingBtn.addEventListener('click', triggerThwip);
+
+    if (audioToggle) {
+      audioToggle.addEventListener('click', () => {
+        soundActive = !soundActive;
+        if (soundActive) {
+          if (audioIcon) audioIcon.textContent = 'volume_up';
+          if (freqReadout) freqReadout.textContent = '44.1 kHz';
+          audioToggle?.classList?.remove('opacity-50');
+        } else {
+          if (audioIcon) audioIcon.textContent = 'volume_off';
+          if (freqReadout) freqReadout.textContent = 'MUTED';
+          audioToggle?.classList?.add('opacity-50');
+        }
+      });
+    }
+
+    // When mainBtn is clicked, if AR is ready, immediately proceed
+    if (mainBtn) {
+      mainBtn.addEventListener('click', () => {
+        triggerThwip();
+        if (window._spiderArReadyCallback) {
+          window._spiderArReadyCallback();
+        }
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

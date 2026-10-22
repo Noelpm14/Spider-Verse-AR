@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <!-- Spider logo star -->
+  <polygon
+    points="80,8 96,56 148,56 106,86 122,134 80,104 38,134 54,86 12,56 64,56"
+    fill="#E62B2B"
+    stroke="#000"
+    stroke-width="5"
+    stroke-linejoin="round"/>
+  <!-- Inner spider symbol (simplified) -->
+  <g fill="#000" opacity="0.8">
+    <!-- Body -->
+    <ellipse cx="80" cy="84" rx="10" ry="14"/>
+    <ellipse cx="80" cy="66" rx="8"  ry="10"/>
+    <!-- Legs (4 per side) -->
+    <line x1="80" y1="72" x2="48" y2="58" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="78" x2="44" y2="72" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="84" x2="46" y2="86" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="88" x2="50" y2="98" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="72" x2="112" y2="58" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="78" x2="116" y2="72" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="84" x2="114" y2="86" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+    <line x1="80" y1="88" x2="110" y2="98" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
