@@ -1,6 +1,5 @@
-# Spider-Verse AR - Web-Based Motion Tracking System
+# Spider-Verse AR - Web-Based Motion 
 
-> *"Anyone can wear the mask."*
 
 A fully browser-native augmented reality experience featuring real-time **face tracking**, **pose tracking**, and **comic-book visual effects** - no installation required.
 
