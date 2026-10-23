@@ -22,50 +22,6 @@ A fully browser-native augmented reality experience featuring real-time **face t
 
 ---
 
-## Project Structure
-
-```
-Cam/
-├── index.html                  <- Landing page + Loading screen + AR section
-├── css/
-│   └── styles.css              <- Spider-Verse comic-book theme
-├── js/
-│   ├── main.js                 <- App orchestrator + RAF loop
-│   ├── tracker.js              <- MediaPipe FaceLandmarker & PoseLandmarker
-│   ├── shaders.js              <- WebGL renderer + GLSL shaders
-│   ├── renderer.js             <- 2D canvas overlay renderer
-│   └── assetLoader.js          <- SVG -> Image utility
-└── assets/
-    └── masks/
-        ├── spider_mask.svg     <- Miles Morales mask
-        └── spider_logo.svg     <- Spider chest logo
-```
-
----
-
-## Quick Start
-
-**Option A - VS Code Live Server** *(recommended)*
-1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
-2. Right-click `index.html` -> **Open with Live Server**
-3. Allow camera access when prompted
-
-**Option B - Python**
-```bash
-cd G:\Projects\Cam
-python -m http.server 8080
-# Open http://localhost:8080
-```
-
-**Option C - Node.js `serve`**
-```bash
-npx serve G:\Projects\Cam
-```
-
-> **Must be served over HTTP/HTTPS** - `file://` URLs block WebRTC camera access and ES module imports.
-
----
-
 ## Multiverse Characters & Expressive Masks
 
 Each universe has its own custom vector mask and **real-time expressive eye tracking** (blinking, squinting, winking):
